@@ -1,5 +1,5 @@
 # Estudos
-Repositório com notas de aulas
+Repositório com materiais de aulas.
 
 ## Introdução
 Este repositório contem códigos usados nos cursos que já fiz.
