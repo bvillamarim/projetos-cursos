@@ -1,12 +1,12 @@
 # Estudos
-Repositório com materiais de estudos.
+Repositório para armazenar do-files, datasets e materiais estudados
 
 ## Introdução
-Este repositório contem códigos usados nos cursos que já fiz.
+Este repositório contem do-files usados nos projetos e cursos que já realizei no Stata.
 
 ## Conteúdo
 | Diretório |	Descrição                     |
 |:----------|:------------------------------|
-| Python    |	Cadernos de cursos de Python  |
-| R	        | Cadernos de cursos de R       |
-| Stata     |	Dofiles de cursos de Stata    |
+|  -   |	-  |
+| 	-        | -       |
+|   -   |	-    |
