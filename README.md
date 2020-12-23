@@ -1,4 +1,4 @@
-# Estudos
+# Stata
 Repositório para armazenar do-files, datasets e materiais estudados
 
 ## Introdução
