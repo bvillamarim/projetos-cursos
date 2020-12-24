@@ -1,8 +1,7 @@
 # Stata
-Repositório para armazenar do-files, datasets e materiais estudados
-
+Repositório para ...
 ## Introdução
-Este repositório contem do-files usados nos projetos e cursos que já realizei no Stata.
+Este repositório contem ...
 
 ## Conteúdo
 | Diretório |	Descrição                     |
