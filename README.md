@@ -5,7 +5,7 @@ PROJETOS-CURSOS</h1>
 
 <p align="left">Repositório para armazenar notebooks, scripts, datasets e outros materiais dos cursos que fiz.</p>
 
-## Conteúdo
+## Organização
 Linguagem > Instituição de ensino > Cursos
 
 
