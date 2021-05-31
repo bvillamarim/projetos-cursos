@@ -369,3 +369,183 @@ SELECT
 	CROSS JOIN curso
 ;
 
+SELECT * FROM aluno;
+SELECT * FROM aluno_curso;
+SELECT * FROM curso;
+
+-- Tentando deletar aluno 1
+DELETE FROM aluno WHERE id = 1;
+
+-- Refazendo regra de negócio
+DROP TABLE aluno_curso;
+CREATE TABLE aluno_curso (
+	aluno_id INTEGER,
+	curso_id INTEGER,
+	PRIMARY KEY (aluno_id, curso_id),
+	
+	FOREIGN KEY (aluno_id)
+	REFERENCES aluno (id)
+	ON DELETE CASCADE,
+	
+	FOREIGN KEY (curso_id)
+	REFERENCES curso (id)
+);
+
+-- Inserindo dados
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (1,1);
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (2,1);
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (3,1);
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (1,3);
+
+-- Busca refinada
+SELECT
+	aluno.nome as "Nome do aluno",
+	curso.nome as "Nome do curso"
+	FROM aluno
+	JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+	JOIN curso 		 ON curso.id 			 = aluno_curso.curso_id
+;
+
+-- Deletando aluno 1
+DELETE FROM aluno WHERE id = 1;
+
+-- Tentando mudar id do aluno
+UPDATE aluno
+	SET id = 12
+	WHERE id = 4;
+UPDATE aluno
+	SET id = 10
+	WHERE id = 2;
+
+-- Refazendo regra de negócio
+DROP TABLE aluno_curso;
+CREATE TABLE aluno_curso (
+	aluno_id INTEGER,
+	curso_id INTEGER,
+	PRIMARY KEY (aluno_id, curso_id),
+	
+	FOREIGN KEY (aluno_id)
+	REFERENCES aluno (id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	
+	FOREIGN KEY (curso_id)
+	REFERENCES curso (id)
+);
+
+-- Inserindo dados
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (2,1);
+INSERT INTO aluno_curso (aluno_id, curso_id) VALUES (3,1);
+
+-- Mudar id do aluno
+UPDATE aluno
+	SET id = 10
+	WHERE id = 2;
+
+-- Busca refinada
+SELECT
+	aluno.id as aluno_id,
+	aluno.nome as "Nome do aluno",
+	curso.id as "curso_id",
+	curso.nome as "Nome do curso"
+	FROM aluno
+	JOIN aluno_curso ON aluno_curso.aluno_id = aluno.id
+	JOIN curso 		 ON curso.id 			 = aluno_curso.curso_id
+;
+
+-- Ordenando consultas
+DROP TABLE funcionarios;
+CREATE TABLE funcionarios (
+	id SERIAL PRIMARY KEY,
+	matricula VARCHAR(10),
+	nome VARCHAR(255),
+	sobrenome VARCHAR(255)
+);
+
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M001', 'Diogo', 'Mascarenhas');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M002', 'Vinícius', 'Dias');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M003', 'Nico', 'Steppat');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M004', 'João', 'Roberto');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M005', 'Diogo', 'Mascarenhas');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M006', 'Alberto', 'Martins');
+INSERT INTO funcionarios (matricula, nome, sobrenome) VALUES ('M007', 'Diogo', 'Oliveira');
+
+SELECT * 
+	FROM funcionarios
+	ORDER BY nome, matricula DESC;
+
+SELECT * 
+	FROM funcionarios
+	ORDER BY 3, 4, 2;
+
+SELECT * 
+	FROM funcionarios
+	ORDER BY 4 DESC, funcionarios.nome, 2 ASC;
+
+-- Limitando consulta
+SELECT * 
+	FROM funcionarios
+	ORDER BY nome
+	LIMIT 5;
+	
+SELECT * 
+	FROM funcionarios
+	ORDER BY id
+	LIMIT 5
+	OFFSET 3;
+
+-- COUNT	- Retorna a quantidade de registros
+-- SUM		- Retorna a soma dos registros
+-- MAX		- Retorna o maior valor dos registros
+-- MIN		- Retorna o menor valor dos registros
+-- AVG		- Retorna a média dos registros
+
+SELECT 
+	COUNT(id),
+	SUM(id),
+	MAX(id),
+	MIN(id),
+	ROUND(AVG(id), 0)
+	FROM funcionarios;
+
+SELECT DISTINCT 
+	nome 
+	FROM funcionarios
+	ORDER BY nome;	
+
+SELECT 
+	nome,
+	sobrenome,
+	COUNT(id)
+	FROM funcionarios
+	GROUP BY 1, 2
+	ORDER BY nome;
+	
+SELECT 
+	curso.nome,
+	COUNT(aluno.id)
+	FROM aluno
+	JOIN aluno_curso ON aluno.id = aluno_curso.aluno_id
+	JOIN curso ON curso.id = aluno_curso.curso_id
+	GROUP BY 1
+	ORDER BY 1;
+	
+SELECT * FROM aluno;
+SELECT * FROM aluno_curso;
+SELECT * FROM curso;
+
+SELECT curso.nome,
+	COUNT (aluno.id)
+	FROM curso
+	LEFT JOIN aluno_curso ON aluno_curso.curso_id = curso.id
+	LEFT JOIN aluno ON aluno.id = aluno_curso.aluno_id
+	--WHERE curso.nome = 'Javascript'
+	GROUP BY 1
+	HAVING COUNT (aluno.id) > 0;
+
+SELECT nome,
+	COUNT(id)
+	FROM funcionarios
+	GROUP BY nome
+	HAVING COUNT(id) > 1;
+	
